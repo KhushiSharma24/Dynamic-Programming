@@ -1,0 +1,42 @@
+/* There is a frog who is initially on Stone 
+1. He will repeat the following action some number of times to reach Stone 
+N: If the frog is currently on Stone i, jump to Stone i+1 or Stone 
+i+2. Here, a cost of abs(h1-h2) j is incurred, where j is the stone to land on.
+Find the minimum possible total cost incurred before the frog reaches Stone N.  
+-> Generally dp[n] will be the final answer 
+[10 500 20 80]
+Dp[1] = minimum cost to reach the index1. = 0 
+Dp[2] = minimum cost to reach the index2. = 490
+Dp[3] = best cost to reach index3 from index 1. = 10
+Answer will be the minimum of these two. 
+Dp[4] = min(abs(b[3]-b[4]) + dp[3] , abs(b[2]-b[4]) + dp[2]) 
+*/
+
+
+
+import java.util.Scanner;
+public class Frog1 {
+    public static void main(String [] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        long[] arr = new long[n + 1];
+        for (int i = 1; i <= n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        long[] dp=new long[n+1];
+        dp[1]=arr[1];
+        dp[2]=Math.abs(arr[1]-arr[2]);
+        for(int i=3;i<=n;i++){
+            dp[i]=Math.min(dp[i-1]+Math.abs(arr[i-1]-arr[i]),dp[i-2]+Math.abs(arr[i]-arr[i-2]));
+        }
+        System.out.println(dp[n]);
+
+
+    }
+
+}
+INPUT:
+4
+10 30 40 20
+OUTPUT:
+30
