@@ -1,0 +1,57 @@
+/* Same as frog1 only the difference is we have to move k steps now.
+Dp[i] = (i-1—->i)
+OR
+(i-2—->i)
+OR
+(i-3—->i)
+OR
+(i-4—->i)
+OR
+.
+.
+.
+(i-k—-->i)
+TC : - O(N*K)
+SC:- O(N) (DP[])
+
+
+
+import java.util.*;
+public class Frog2 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        long k = scanner.nextLong();
+
+        long[] b = new long[n + 1];
+        for (int i = 1; i <= n; i++) {
+            b[i] = scanner.nextLong();
+        }
+        long[] dp=new long[n+1];
+        for (int i = 1; i <= n; i++) {    //initialize dp array
+            dp[i] = Long.MAX_VALUE;
+        }
+        dp[1]=0;
+        dp[2]=Math.abs(b[1]-b[2]);
+        int i=3;
+        while(i<=n){
+            long result = Long.MAX_VALUE;
+            int j=1;
+            while(j<=k && i-j>=1) {
+                // so that i-j cannot become negative
+                long ans=Math.abs(b[i]-b[i-j])+dp[i-j];
+                result=Math.min(result,ans);
+                j++;
+            }
+            dp[i]=result;
+            i++;
+        }
+        System.out.println(dp[n]);
+    }
+}
+
+INPUT:
+5 3
+10 30 40 50 20
+OUTPUT:
+30
